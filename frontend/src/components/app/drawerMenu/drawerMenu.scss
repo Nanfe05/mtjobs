@@ -1,0 +1,13 @@
+.drawerMenu{
+
+    &>.MuiPaper-root.MuiDrawer-paper{
+        min-width: 200px;
+    }
+}
+
+.menuBoton{
+    position: absolute;
+    top: 3%;
+    left: 3%;
+    pointer-events: auto;
+}
