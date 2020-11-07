@@ -171,6 +171,9 @@ router.post('/name',async(req,res)=>{
 
     const info = await AddProfiles(response.data.total,name,size);
    
+    info.name=name;
+    info.size=size;
+
     res.json(info);
 });
 
@@ -195,6 +198,9 @@ router.post('/job',async (req,res)=>{
         "skill/role":{"text":job,"experience":"potential-to-develop"}
     });
     const info = await AddJobs(response.data.total,job,size);
+
+    info.job=job;
+    info.size = size;
 
     res.json(info);
 });

@@ -9,32 +9,32 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 
-import SwipeableViews from 'react-swipeable-views';
+// import SwipeableViews from 'react-swipeable-views';
 
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+// function TabPanel(props) {
+//     const { children, value, index, ...other } = props;
   
-    return (
-      <div
-        hidden={value !== index}
-        {...other}
-      >
-        {value === index && (
-          children
-        )}
-      </div>
-    );
-  }
+//     return (
+//       <div
+//         hidden={value !== index}
+//         {...other}
+//       >
+//         {value === index && (
+//           children
+//         )}
+//       </div>
+//     );
+//   }
 
 const Home = (props) =>{
     const [currentTab,setCurrentTab] = useState(0);
 
         return(
             <div className='home'>
-                <SwipeableViews index={currentTab} className='CustomSwipe'>
-                    <TabPanel index={0} value={currentTab}>     
+                {/* <SwipeableViews index={currentTab} className='CustomSwipe'> */}
+                    {/* <TabPanel index={0} value={currentTab}>      */}
                         <Card >
-                            <TextField 
+                            {/* <TextField 
                                 label='Ingresa tu Nombre:'
                                 placeholder='Felipe'
                                 onChange={(e)=>{
@@ -47,11 +47,11 @@ const Home = (props) =>{
                                     setCurrentTab(1);
                                 }}
                                 className='MtJBoton'
-                            >Continuar</Button>
+                            >Continuar</Button> */}
 
                         </Card>
-                    </TabPanel>
-                    <TabPanel index={1} value={currentTab}>
+                    {/* </TabPanel> */}
+                    {/* <TabPanel index={1} value={currentTab}>
                         <Card>
                         <Button
                                 onClick={()=>{
@@ -73,8 +73,8 @@ const Home = (props) =>{
                         <Card>
                         HAHAHA
                         </Card>
-                    </TabPanel>
-                </SwipeableViews>
+                    </TabPanel> */}
+                {/* </SwipeableViews> */}
             </div>
         );
 }
