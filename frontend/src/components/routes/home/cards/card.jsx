@@ -13,12 +13,20 @@ import {ChangeName, ChangeJob ,ChangeJobData,ChangeNameData,SwitchLoading} from 
 
 const axios = require('axios');
 
-async function RequestData(ChangeNameData,ChangeJobData,SwitchLoading){
-    let curiousName = await axios.post('randomfacts/name');
-    ChangeNameData(curiousName.data);
-    let curiousJob = await axios.post('randomfacts/job');
-    ChangeJobData(curiousJob.data);
-    SwitchLoading();
+async function RequestData(ChangeNameData,ChangeJobData,SwitchLoading,name,job,size){
+    if(!name || !job){
+        let curiousName = await axios.post('randomfacts/name');
+        ChangeNameData(curiousName.data);
+        let curiousJob = await axios.post('randomfacts/job');
+        ChangeJobData(curiousJob.data);
+        SwitchLoading();
+    }else{
+        let curiousName = await axios.post('randomfacts/name',{name,size});
+        ChangeNameData(curiousName.data);
+        let curiousJob = await axios.post('randomfacts/job',{job,size});
+        ChangeJobData(curiousJob.data);
+        SwitchLoading();
+    }
 }
 
 function PrepareInterestData(nameData,ChangeUInterest){
@@ -294,8 +302,15 @@ const Card = (props) =>{
                                     props.ChangeJob(e.target.value);
                                 }}
                                 />
-                                <Button className='MtJBoton' onClick={()=>{
-                                    setCardFlipped(!cardflipped)}}
+                                <Button className='MtJBoton' onClick={async()=>{
+                                    props.SwitchLoading();
+
+                                    setCardFlipped(!cardflipped);
+
+                                    await RequestData(props.ChangeNameData,props.ChangeJobData, props.SwitchLoading,props.state.name,props.state.job,5)
+                                
+                                }}
+
                                     >Consultar</Button>
                             </div>
                             </>

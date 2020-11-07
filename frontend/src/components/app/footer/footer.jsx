@@ -5,7 +5,7 @@ import React from 'react';
 const Footer = () =>{
     return(
         <div className='footer'>
-                    V 0.0.1
+                <p>V 0.0.1</p> 
         </div>
     );
 };

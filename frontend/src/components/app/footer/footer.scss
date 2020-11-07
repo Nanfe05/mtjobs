@@ -3,4 +3,11 @@
     left: 50%;
     bottom: 5%;
     transform:translateX(-50%);
+    &  >p{
+        font-family: 'Roboto';
+    }
+}
+
+p{
+    font-family: 'Roboto';
 }
