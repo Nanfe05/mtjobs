@@ -42,13 +42,44 @@ async function AddProfiles(sizeOfProfiles,name,size){
         let languages = await axios.get(`https://bio.torre.co/api/bios/${user_nickname}/languages?locale=es`);
         let personalTraits = await axios.get(`https://bio.torre.co/api/bios/${user_nickname}/tests/personality-traits/analysis`);
 
+        let inter = [];
+        let sklls =[];
+        let lng = [];
+        let prt = [];
+
+        if(interest.data.length > 0){
+            for(ii=0; ii<interest.data.length;ii++ ){
+                inter.push({
+                    name: interest.data[ii].name
+                });
+            }
+        }
+        if(skills.data.length > 0){
+            for(ii=0; ii<skills.data.length;ii++ ){
+                sklls.push({
+                    name: skills.data[ii].name
+                });
+            }
+        }
+        if(languages.data.length > 0){
+            for(ii=0; ii<languages.data.length;ii++ ){
+                lng.push({
+                    name: languages.data[ii].language,
+                    xp: languages.data[ii].fluency
+                });
+            }
+        }
+        if(personalTraits.data){
+            prt = personalTraits.data.analyses;
+        }
+
+
         profiles[i]={
-            ...profiles[i],
-            interest: interest.data,
-            skills: skills.data,
-            languages: languages.data,
-            personalTraits: personalTraits.data,
-            // username:null,
+            // ...profiles[i], // Commented to keep privacy of users
+            interest: inter,
+            skills: sklls,
+            languages: lng,
+            personalTraits:prt,
 
         };
     }
@@ -64,10 +95,12 @@ async function AddJobs(sizeOfJobs,job,size){
     for(i=0;i<jobsQuantity;i++){
         // Generar un numero general entre todos los candidatos
         let number = Math.round(Math.random() * sizeOfJobs - 1); //Math.random() * (max - min) + min;
+        
         // Checkear los jobs random para sacar nickjob
-        let response = await axios.post(`https://search.torre.co/opportunities/_search/?offset=0&size=2&aggregate=false`,{
+        let response = await axios.post(`https://search.torre.co/opportunities/_search/?offset=${number}&size=2&aggregate=false`,{
             "skill/role":{"text":job,"experience":"potential-to-develop"}
         });
+        
         jobs[i] = {
             ...jobs[i],
             jobId: response.data.results[0].id,
@@ -80,12 +113,35 @@ async function AddJobs(sizeOfJobs,job,size){
     for(i=0; i<jobsQuantity; i++){
         let jobId = jobs[i].jobId;
         let job = await axios.get(`https://torre.co/api/opportunities/${jobId}`);
-        console.log('dsaf ',job.data);
+        let lng = [];
+        let str = [];
+        
+
+        for(ii=0;ii<job.data.languages.length;ii++){
+            lng.push({
+                lng: job.data.languages[ii].language.name,
+                xp: job.data.languages[ii].fluency
+            });
+        }
+        let compensation = job.data.compensation.visible ? {
+            min: job.data.compensation.minAmount,
+            max: job.data.compensation.maxAmount,
+            periodicity: job.data.compensation.periodicity
+        }: 0; 
+
+
+        for(ii=0;ii<job.data.strengths.length;ii++){
+            str.push({
+                str: job.data.strengths[ii].name,
+                xp: job.data.strengths[ii].experience
+            });
+        }
+
         jobs[i]={
-            ...jobs[i],
-            languages: job.data.languages,
-            compensation: job.data.compensation,
-            strengths: job.data.strengths
+            // ...jobs[i], // Commented to keep privacy of users
+            lng,
+            compensation,
+            str
         };
     }
 
@@ -138,9 +194,8 @@ router.post('/job',async (req,res)=>{
     const response = await axios.post(`https://search.torre.co/opportunities/_search/?offset=0&size=2&aggregate=false`,{
         "skill/role":{"text":job,"experience":"potential-to-develop"}
     });
-
     const info = await AddJobs(response.data.total,job,size);
-   
+
     res.json(info);
 });
 
