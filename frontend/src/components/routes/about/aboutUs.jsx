@@ -9,6 +9,8 @@ class AboutUs extends Component{
             <div className='aboutUs'>
                 <p>Tecnologias en Frontend:</p>
                 <p>- ReactJS</p>
+                <p>- React Hooks</p>
+                <p>- Axios</p>
                 <p>- MaterialUI</p>
                 <p>- Redux </p>
                 <p>- React Router</p>

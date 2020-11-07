@@ -150,59 +150,75 @@ async function AddJobs(sizeOfJobs,job,size){
 
 // Random Name
 router.post('/name',async(req,res)=>{
-
-    let name = '';
-    let size = 2;
-
-    if(req.body.name){
-        name = req.body.name;
-    }else{
-        const randomGender = Math.round(Math.random() * (names.length - 1) + 0 ); //Math.random() * (max - min) + min;
-        const randomName = Math.round(Math.random() * (names[randomGender].length - 1)+ 0);
-        name = names[randomGender][randomName];
+    try{
+        let name = '';
+        let size = 2;
+    
+        if(req.body.name){
+            name = req.body.name;
+        }else{
+            const randomGender = Math.round(Math.random() * (names.length - 1) + 0 ); //Math.random() * (max - min) + min;
+            const randomName = Math.round(Math.random() * (names[randomGender].length - 1)+ 0);
+            name = names[randomGender][randomName];
+        }
+        if(req.body.size){
+            size = req.body.size;
+        }
+    
+        const response = await axios.post(`https://search.torre.co/people/_search/?offset=0&size=1&aggregate=false`,{"name":{term:name}});
+    
+        // Search for ${size} random names 
+    
+        const info = await AddProfiles(response.data.total,name,size);
+       
+        info.name=name;
+        info.size=size;
+    
+        res.json(info);
+    }catch(err){
+        res.sendStatus(404).json({
+            error:{
+                msg:'Error en el servidor'
+            }
+        });
+        console.log(err);
     }
-    if(req.body.size){
-        size = req.body.size;
-    }
-
-    const response = await axios.post(`https://search.torre.co/people/_search/?offset=0&size=1&aggregate=false`,{"name":{term:name}});
-
-    // Search for ${size} random names 
-
-    const info = await AddProfiles(response.data.total,name,size);
-   
-    info.name=name;
-    info.size=size;
-
-    res.json(info);
 });
 
 
 // Random Job
 router.post('/job',async (req,res)=>{
-
-    let job = '';
-    let size = 2;
-
-    if(req.body.job){
-        job = req.body.job;
-    }else{
-        const randomJob = Math.round(Math.random() * (jobs.length - 1) + 0 ); //Math.random() * (max - min) + min
-        job = jobs[randomJob];
+    try{
+        let job = '';
+        let size = 2;
+    
+        if(req.body.job){
+            job = req.body.job;
+        }else{
+            const randomJob = Math.round(Math.random() * (jobs.length - 1) + 0 ); //Math.random() * (max - min) + min
+            job = jobs[randomJob];
+        }
+        if(req.body.size){
+            size = req.body.size;
+        }
+    
+        const response = await axios.post(`https://search.torre.co/opportunities/_search/?offset=0&size=2&aggregate=false`,{
+            "skill/role":{"text":job,"experience":"potential-to-develop"}
+        });
+        const info = await AddJobs(response.data.total,job,size);
+    
+        info.job=job;
+        info.size = size;
+    
+        res.json(info);
+    }catch(err){
+        res.sendStatus(404).json({
+            error:{
+                msg:'Error en el servidor'
+            }
+        });
+        console.log(err);
     }
-    if(req.body.size){
-        size = req.body.size;
-    }
-
-    const response = await axios.post(`https://search.torre.co/opportunities/_search/?offset=0&size=2&aggregate=false`,{
-        "skill/role":{"text":job,"experience":"potential-to-develop"}
-    });
-    const info = await AddJobs(response.data.total,job,size);
-
-    info.job=job;
-    info.size = size;
-
-    res.json(info);
 });
 
 module.exports = router

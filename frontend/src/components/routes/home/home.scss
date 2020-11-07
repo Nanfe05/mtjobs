@@ -6,26 +6,19 @@
 
     height: 100vh;
 }
-.CustomSwipe{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+// .CustomSwipe{
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
 
 
-    padding: 10px;
-    width: 100%;
-    // border-radius: 20px;
-    // box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
-    & >div>div{
-        overflow: visible!important;
-    }
-}
+//     padding: 10px;
+//     width: 100%;
+//     // border-radius: 20px;
+//     // box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+//     & >div>div{
+//         overflow: visible!important;
+//     }
+// }
 
-.MtJBoton{
-    &.MuiButtonBase-root.MuiButton-root.MuiButton-text{
-        margin: 10px;
-        background: lightgray;
-        width: 80%;
-    }
-}

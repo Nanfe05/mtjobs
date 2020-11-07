@@ -1,23 +1,34 @@
 import * as actionTypes from '../actionTypes';
 
 const defState = {
-    user_name:'',
-    user_email:'',
-    objective:''
+    name:'',
+    job:'',
+    nameData:{},
+    jobData:{},
+    loading:true
 };
 
 const App = (state = defState, action) => {
   switch (action.type) {
-    
-    case actionTypes.CHANGE_USER_NAME:
+    case actionTypes.JOB_DATA:
+        return{
+            ...state,
+            jobData: action.payload
+        }
+    case actionTypes.NAME_DATA:
+        return{
+            ...state,
+            nameData: action.payload
+        }
+    case actionTypes.CHANGE_NAME:
       return {
         ...state,
-        user_name:action.payload
+        name:action.payload
         };
-    case actionTypes.CHANGE_OBJECTIVE:
+    case actionTypes.CHANGE_JOB:
         return {
             ...state,
-            objective:action.payload
+            job:action.payload
             };
     default:
       return state;

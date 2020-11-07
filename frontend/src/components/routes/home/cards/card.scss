@@ -10,8 +10,76 @@
     width: 300px;
     height: 300px;
 
-    border-radius: 15px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    & >.flip-card {
+        background-color: transparent;
+        width: 100%;
+        height: 100%;
+        perspective: 1000px; /* Remove this if you don't want the 3D effect */
+      }
+}
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+position: relative;
+width: 100%;
+height: 100%;
+text-align: center;
+transition: transform 0.8s;
+border-radius: 15px;
+box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+transform-style: preserve-3d;
+}
 
-    background-color: beige;
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card-flipped  {
+transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+position: absolute;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+width: 100%;
+height: 100%;
+border-radius: 15px;
+-webkit-backface-visibility: hidden; /* Safari */
+backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+background-color: beige;
+color: black;
+}
+
+/* Style the back side */
+.flip-card-back {
+background-color: rgb(247, 219, 159);
+color: white;
+transform: rotateY(180deg);
+}
+
+
+.MtJBoton{
+    &.MuiButtonBase-root.MuiButton-root.MuiButton-text{
+        margin: 10px;
+        background: lightgray;
+        width: 90%;
+    }
+}
+
+.inputText{
+    width: 90%;
+}
+.loading{
+height: 100%;
+width: 100%;
+background-color: beige;
+border-radius: 15px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
 }

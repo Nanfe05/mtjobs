@@ -1,3 +1,4 @@
-export const CHANGE_USER_NAME = 'CHANGE_USER_NAME';
-
-export const CHANGE_OBJECTIVE = 'CHANGE_OBJECTIVE';
+export const CHANGE_NAME = 'CHANGE_NAME';
+export const CHANGE_JOB = 'CHANGE_JOB';
+export const NAME_DATA='NAME_DATA';
+export const JOB_DATA='JOB_DATA';
