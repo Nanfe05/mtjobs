@@ -291,6 +291,10 @@ const Card = (props) =>{
                                 }}>Try it yourself!</Button>
                             </div>
                             <div className="flip-card-back">
+                                <p className='ctxt'>Submit a name you want to know: the average of skills, languages, strengths, and interests of people with that name, all values come from real profiles and they are selected in a random way.</p>
+                                <p className='ctxt'>Submit a job's keyword that you would like to know an average of language and strengths required.</p>
+                                <p className='ctxtsmall'>** Some values may not be displayed due to the randomness and that causes the server to select some profiles that don't have the info required.</p>
+                                <p className='ctxtsmall'>** To solve this: just refresh or try again.</p>
                                 <TextField 
                                 style={{
                                     margin:'20px 0'
