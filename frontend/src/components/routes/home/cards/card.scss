@@ -27,7 +27,6 @@ transition: transform 0.8s;
 border-radius: 15px;
 box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 transform-style: preserve-3d;
-
 }
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
@@ -75,7 +74,7 @@ transform: rotateY(180deg);
 
 .inputText{
     width: 90%;
-    
+    margin: 20px 0!important;
     &>div{
         &.MuiInput-underline::after{
             border-bottom:  2px solid black;
@@ -107,7 +106,11 @@ align-items: center;
        }
   
 }
-
+.graph_holde_bar{
+    &>canvas{
+        width: 200px;
+    }
+}
 .card-display-row{
     display: flex;
     flex-direction: row;
@@ -156,4 +159,63 @@ align-items: center;
     color: black;
     font-size: 14px;
     margin: 10px;
+}
+
+@media only screen and (max-width: 650px) {
+    .cardMain{
+        height: 450px;
+        width: 350px;
+        
+  }
+    .info_holder{
+        height: 400px;
+        overflow-y: scroll;
+    }
+    .card-display-column{
+        width: 100%;
+    }
+    
+.titlesInfo{
+    font-size: 16px;
+    margin: 2px;
+    margin-top: 10px;
+}
+.subTitleInfo{
+    font-size: 14px;
+    margin: 2px;
+    margin-top: 10px;
+}
+
+.txtInfo{
+    font-size: 14px;
+    margin: 4px;
+}
+.ctxt{
+    font-family: 'Roboto';
+    color: black;
+    font-size: 14px;
+    margin: 8px;
+}
+.ctxtsmall{
+  
+    font-size: 12px;
+    margin: 8px;
+}
+.inputText{
+    width: 90%;
+    margin: 10px 0 !important;
+    &>div{
+        &.MuiInput-underline::after{
+            border-bottom:  1px solid black;
+        }
+    }
+    &>label{
+        &.Mui-focused{
+        font-weight: 400;
+        color: black;
+        }
+        font-weight: bold;
+        color: black;
+    }
+}
 }

@@ -18,9 +18,9 @@ const Header = () =>{
             }}
             ></div>
         <div className='header'>
-            <img style={{
-                width:'100px',
-            }}
+            <img 
+            className='imgLogo'
+            
             src='/assets/logo-01.png' alt='did you know jobs'/>
         </div>
         </>

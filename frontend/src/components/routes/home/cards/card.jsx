@@ -94,7 +94,7 @@ function PrepareUPTData(nameData,ChangeUPT){
         for(let i=0;i< Object.keys(nameData).length-2 ; i++){
             
             for (let ii=0; ii < nameData[i].personalTraits.length; ii++){
-                console.log(nameData[i].personalTraits[ii].groupId);
+                
                 if(upt[nameData[i].personalTraits[ii].groupId]){
                     
                     
@@ -197,6 +197,8 @@ const Card = (props) =>{
                             :
                             <>                           
                             <div className="flip-card-front">
+                                <div className='info_holder'>
+
                                 <div className='card-display-row'>
                                     <div className='card-display-column'>
                                     <p className='titlesInfo'><strong>Name: </strong>{props.state.nameData.name.toUpperCase()}</p>
@@ -223,7 +225,7 @@ const Card = (props) =>{
                                     </div> : <div></div>
                                 }
                                 {uPT ?
-                                    <div className='graph_holder'>    
+                                    <div className='graph_holde_bar'>    
                                         <Bar 
                                         options={{ maintainAspectRatio: false }}
                                         data={{
@@ -281,6 +283,7 @@ const Card = (props) =>{
                                         }
                                     </div>
                                 </div>
+                                </div>
                             
                                
                                 <Button 
@@ -291,14 +294,13 @@ const Card = (props) =>{
                                 }}>Try it yourself!</Button>
                             </div>
                             <div className="flip-card-back">
+                            <div className='info_holder'>
                                 <p className='ctxt'>Submit a name you want to know: the average of skills, languages, strengths, and interests of people with that name, all values come from real profiles and they are selected in a random way.</p>
                                 <p className='ctxt'>Submit a job's keyword that you would like to know an average of language and strengths required.</p>
                                 <p className='ctxtsmall'>** Some values may not be displayed due to the randomness and that causes the server to select some profiles that don't have the info required.</p>
                                 <p className='ctxtsmall'>** To solve this: just refresh or try again.</p>
                                 <TextField 
-                                style={{
-                                    margin:'20px 0'
-                                }}
+                               
                                 className='inputText'
                                 label='Ingresa un nombre:' 
                                 placeholder='Adrian' 
@@ -308,9 +310,7 @@ const Card = (props) =>{
                                 }}
                                 />
                                 <TextField 
-                                style={{
-                                    margin:'20px 0'
-                                }} 
+                               
                                 className='inputText'
                                 label='Ingresa un skill del trabajo:' 
                                 placeholder='ReactJS' 
@@ -319,6 +319,7 @@ const Card = (props) =>{
                                     props.ChangeJob(e.target.value);
                                 }}
                                 />
+                            </div>
                                 <Button className='MtJBoton' 
                                     style={{backgroundColor:'rgb(255, 230, 51)'}}
                                     onClick={async()=>{
