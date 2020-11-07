@@ -2,9 +2,13 @@
 @import './components/app/variables.scss';
 @import './components/app/App.scss';
 
+@import './components/routes/about/aboutUs.scss';
+@import './components/routes/home/home.scss';
+
+@import './components/app/header/header.scss';
+@import './components/app/footer/footer.scss';
+
 
 @import './components/app/drawerMenu/drawerMenu.scss';
 @import './components/routes/home/cards/card.scss';
 
-@import './components/routes/about/aboutUs.scss';
-@import './components/routes/home/home.scss';

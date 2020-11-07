@@ -23,7 +23,7 @@ export default function DrawerMenu() {
   return (
     <div style={{
         position:'absolute',
-        width:'100vw',
+        width:'100%',
         height:'100vh',
         pointerEvents:'none'
     }}>
