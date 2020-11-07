@@ -16,6 +16,7 @@ class AboutUs extends Component{
                 <p>- React Router</p>
                 <p>- Sass</p>
                 <p>- axios</p>
+                <p>- chart.js</p>
                 <p>Tecnologias en Backend:</p>
                 <p>- NodeJS</p>
                 <p>- ExpressJS</p>

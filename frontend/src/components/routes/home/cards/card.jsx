@@ -101,6 +101,51 @@ function PrepareUPTData(nameData,ChangeUPT){
     ChangeUPT(upt);
 }
 
+// Preparar datos de empresas 
+
+function PrepareJLngData(jobData,ChangeULng){
+    let lng = {};
+        for(let i=0;i< Object.keys(jobData).length-2 ; i++){
+            
+            for (let ii=0; ii < jobData[i].lng.length; ii++){
+                if(lng[jobData[i].lng[ii].lng]){
+                    
+                    lng[jobData[i].lng[ii].lng] += 1;
+                }else{
+                    
+                    lng[jobData[i].lng[ii].lng] = 1;
+                }
+            }
+        }
+    let frase = '';
+    Object.keys(lng).map((e)=>{
+        frase += ` * ${e}`;
+        return '';
+    });
+    ChangeULng(frase);
+}
+
+function PrepareJStrData(jobData,ChangeJStr){
+    let str = {};
+        for(let i=0;i< Object.keys(jobData).length-2 ; i++){
+            
+            for (let ii=0; ii < jobData[i].str.length; ii++){
+                if(str[jobData[i].str[ii].str]){
+                    
+                    str[jobData[i].str[ii].str] += 1;
+                }else{
+                    
+                    str[jobData[i].str[ii].str] = 1;
+                }
+            }
+        }
+    let frase = '';
+    Object.keys(str).map((e)=>{
+        frase += ` * ${e}`;
+        return '';
+    });
+    ChangeJStr(frase);
+}
 
 const Card = (props) =>{
 
@@ -109,6 +154,8 @@ const Card = (props) =>{
     const [uSkills,setUSkills] = useState(null);
     const [uLng,setLng] = useState(null);
     const [uPT, setUPT] = useState(null);
+    const [jLng, setJLng] = useState(null);
+    const [str, setStr] = useState(null);
 
     useEffect(()=>{
         if(props.state.loading){
@@ -122,6 +169,8 @@ const Card = (props) =>{
             PrepareSkillsData(props.state.nameData, setUSkills);
             PrepareLngData(props.state.nameData, setLng);
             PrepareUPTData(props.state.nameData, setUPT);
+            PrepareJLngData(props.state.jobData, setJLng);
+            PrepareJStrData(props.state.jobData, setStr)
         }
     // eslint-disable-next-line
     },[props.state.nameData, props.state.loading]);
@@ -141,7 +190,9 @@ const Card = (props) =>{
                             :
                             <>                           
                             <div className="flip-card-front">
-                                <p>Nombre: {props.state.nameData.name.toUpperCase()}</p>
+                                <div className='card-display-row'>
+                                    <div className='card-display-column'>
+                                    <p>Nombre: {props.state.nameData.name.toUpperCase()}</p>
                                 <p>Tamaño del muestreo: {props.state.nameData.size}</p>
                                 {uInter && 
                                     <div className='graph_holder'>    
@@ -197,6 +248,29 @@ const Card = (props) =>{
                                         {uLng}
                                     </div>
                                 }
+
+                                    </div>
+                                    <div className='card-display-column'>
+                                        <p>Palabra Clave: {props.state.jobData.job.toUpperCase()}</p>
+                                        <p>Tamaño del muestreo: {props.state.jobData.size}</p>
+                                        {
+                                            jLng &&
+                                            <>
+                                                <p>Lenguajes requeridos:</p>
+                                                <p>{jLng}</p>
+                                            </>
+                                        }
+                                        {
+                                            str &&
+                                            <>
+                                                <p>fortalezas mas requeridas:</p>
+                                                <p>{str}</p>
+                                            </>
+                                        }
+                                    </div>
+                                </div>
+                            
+                               
                                 <Button className='MtJBoton' onClick={()=>{
                                     setCardFlipped(!cardflipped);
                                 }}>Intentalo!</Button>
