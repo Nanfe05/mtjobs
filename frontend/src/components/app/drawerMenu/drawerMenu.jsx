@@ -27,7 +27,7 @@ export default function DrawerMenu() {
         height:'100vh',
         pointerEvents:'none'
     }}>
-        <Fab size='medium' className="menuBoton" onClick={()=>{setDrawer(true)}}>
+        <Fab size='medium' className="menuBoton" style={{backgroundColor:'rgb(255, 230, 51)'}} onClick={()=>{setDrawer(true)}}>
            <MenuIcon/>
         </Fab>
         <SwipeableDrawer

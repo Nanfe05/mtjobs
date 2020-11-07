@@ -62,7 +62,7 @@ function PrepareSkillsData(nameData,ChangeUSkills){
         }
     let frase = '';
     Object.keys(skills).map((e)=>{
-        frase += ` * ${e}`;
+        frase += ` - ${e}`;
         return '';
     });
     ChangeUSkills(frase);
@@ -84,7 +84,7 @@ function PrepareLngData(nameData,ChangeULng){
         }
     let frase = '';
     Object.keys(lng).map((e)=>{
-        frase += ` * ${e}`;
+        frase += ` - ${e}`;
         return '';
     });
     ChangeULng(frase);
@@ -105,7 +105,6 @@ function PrepareUPTData(nameData,ChangeUPT){
                 }
             }
         }
-    console.log(upt);
     ChangeUPT(upt);
 }
 
@@ -127,7 +126,7 @@ function PrepareJLngData(jobData,ChangeULng){
         }
     let frase = '';
     Object.keys(lng).map((e)=>{
-        frase += ` * ${e}`;
+        frase += ` - ${e}`;
         return '';
     });
     ChangeULng(frase);
@@ -149,7 +148,7 @@ function PrepareJStrData(jobData,ChangeJStr){
         }
     let frase = '';
     Object.keys(str).map((e)=>{
-        frase += ` * ${e}`;
+        frase += ` - ${e}`;
         return '';
     });
     ChangeJStr(frase);
@@ -193,16 +192,16 @@ const Card = (props) =>{
                     {
                             props.state.loading ? 
                             <div className='loading'>
-                                <CircularProgress/>
+                                <CircularProgress style={{color:'rgb(255, 230, 51)'}}/>
                             </div>
                             :
                             <>                           
                             <div className="flip-card-front">
                                 <div className='card-display-row'>
                                     <div className='card-display-column'>
-                                    <p>Nombre: {props.state.nameData.name.toUpperCase()}</p>
-                                <p>Tamaño del muestreo: {props.state.nameData.size}</p>
-                                {uInter && 
+                                    <p className='titlesInfo'><strong>Name: </strong>{props.state.nameData.name.toUpperCase()}</p>
+                                <p className='titlesInfo'><strong>Sample size: </strong>{props.state.nameData.size}</p>
+                                {uInter ?
                                     <div className='graph_holder'>    
                                         <Doughnut 
                                         
@@ -221,9 +220,9 @@ const Card = (props) =>{
                                                 ]
                                             }]}}
                                         />
-                                    </div>
+                                    </div> : <div></div>
                                 }
-                                {uPT && 
+                                {uPT ?
                                     <div className='graph_holder'>    
                                         <Bar 
                                         options={{ maintainAspectRatio: false }}
@@ -242,49 +241,60 @@ const Card = (props) =>{
                                                 ]
                                             }]}}
                                         />
-                                    </div>
+                                    </div> : <div></div>
                                 }
                                 {uSkills && 
                                     <div className='graph_holder'>    
-                                        <p>Las personas con este nombre se enfocan en:</p>
-                                        {uSkills}
+                                        <p className='subTitleInfo'>{props.state.nameData.name.toUpperCase()} usually have the following skills: </p>
+                                        <p className='txtInfo'>
+                                            {uSkills}
+                                        </p>
                                     </div>
                                 }
                                 {uLng && 
                                     <div className='graph_holder'>    
-                                        <p>y saben los siguientes idiomas:</p>
-                                        {uLng}
+                                        <p className='subTitleInfo'>and can speak:</p>
+                                        <p className='txtInfo'>
+                                            {uLng}
+                                        </p>
                                     </div>
                                 }
 
                                     </div>
                                     <div className='card-display-column'>
-                                        <p>Palabra Clave: {props.state.jobData.job.toUpperCase()}</p>
-                                        <p>Tamaño del muestreo: {props.state.jobData.size}</p>
+                                   
+                                        <p className='titlesInfo'><strong>Job keyword: </strong> {props.state.jobData.job.toUpperCase()}</p>
+                                        <p className='titlesInfo'><strong>Sample size: </strong>{props.state.jobData.size}</p>
                                         {
                                             jLng &&
                                             <>
-                                                <p>Lenguajes requeridos:</p>
-                                                <p>{jLng}</p>
+                                                <p className='subTitleInfo'>Most frequently asked languages:</p>
+                                                <p className='txtInfo'>{jLng}</p>
                                             </>
                                         }
                                         {
                                             str &&
                                             <>
-                                                <p>fortalezas mas requeridas:</p>
-                                                <p>{str}</p>
+                                                <p className='subTitleInfo'>Most frequently asked strengths:</p>
+                                                <p className='txtInfo'>{str}</p>
                                             </>
                                         }
                                     </div>
                                 </div>
                             
                                
-                                <Button className='MtJBoton' onClick={()=>{
+                                <Button 
+                                style={{backgroundColor:'rgb(255, 230, 51)'}}
+                                className='MtJBoton' 
+                                onClick={()=>{
                                     setCardFlipped(!cardflipped);
-                                }}>Intentalo!</Button>
+                                }}>Try it yourself!</Button>
                             </div>
                             <div className="flip-card-back">
                                 <TextField 
+                                style={{
+                                    margin:'20px 0'
+                                }}
                                 className='inputText'
                                 label='Ingresa un nombre:' 
                                 placeholder='Adrian' 
@@ -294,6 +304,9 @@ const Card = (props) =>{
                                 }}
                                 />
                                 <TextField 
+                                style={{
+                                    margin:'20px 0'
+                                }} 
                                 className='inputText'
                                 label='Ingresa un skill del trabajo:' 
                                 placeholder='ReactJS' 
@@ -302,7 +315,9 @@ const Card = (props) =>{
                                     props.ChangeJob(e.target.value);
                                 }}
                                 />
-                                <Button className='MtJBoton' onClick={async()=>{
+                                <Button className='MtJBoton' 
+                                    style={{backgroundColor:'rgb(255, 230, 51)'}}
+                                    onClick={async()=>{
                                     props.SwitchLoading();
 
                                     setCardFlipped(!cardflipped);
@@ -311,7 +326,7 @@ const Card = (props) =>{
                                 
                                 }}
 
-                                    >Consultar</Button>
+                                    >Submit</Button>
                             </div>
                             </>
                         }

@@ -27,6 +27,7 @@ transition: transform 0.8s;
 border-radius: 15px;
 box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 transform-style: preserve-3d;
+
 }
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
@@ -50,13 +51,15 @@ backface-visibility: hidden;
 
 /* Style the front side (fallback if image is missing) */
 .flip-card-front {
-background-color: beige;
+border: 1px solid rgba(211, 211, 211, 0.3);
+background-color:white;
 color: black;
 }
 
 /* Style the back side */
 .flip-card-back {
-background-color: rgb(247, 219, 159);
+border: 1px solid rgba(211, 211, 211, 0.3);
+background-color:whitesmoke;
 color: white;
 transform: rotateY(180deg);
 }
@@ -72,11 +75,25 @@ transform: rotateY(180deg);
 
 .inputText{
     width: 90%;
+    
+    &>div{
+        &.MuiInput-underline::after{
+            border-bottom:  2px solid black;
+        }
+    }
+    &>label{
+        &.Mui-focused{
+        font-weight: 400;
+        color: black;
+        }
+        font-weight: bold;
+        color: black;
+    }
 }
 .loading{
 height: 100%;
 width: 100%;
-background-color: beige;
+background-color: white;
 border-radius: 15px;
 display: flex;
 flex-direction: column;
@@ -96,7 +113,7 @@ align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .card-display-column{
@@ -105,4 +122,25 @@ align-items: center;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.titlesInfo{
+    font-family: 'Roboto';
+    font-size: 20px;
+    margin: 5px;
+}
+.subTitleInfo{
+    font-family: 'Roboto';
+    font-weight: bold;
+    color: gray;
+    font-size: 16px;
+    margin: 5px;
+    margin-top: 15px;
+}
+
+.txtInfo{
+    font-family: 'Roboto';
+    font-style: italic;
+    font-size: 14px;
+    margin: 10px;
 }

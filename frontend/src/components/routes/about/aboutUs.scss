@@ -4,5 +4,15 @@
     justify-content: center;
     align-items: center;
 
+    background-color: white;
     height: 100vh;
+    & >p{
+        font-family: 'Roboto';
+        margin: 5px;
+        &.title{
+            color:rgb(255, 230, 51);
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
 }
