@@ -5,6 +5,9 @@ export const ChangeName=(name)=>({
     payload:name
 });
 
+export const SwitchLoading = () =>({
+    type: actionTypes.SWITCH_LOADING
+});
 
 export const ChangeJob = (obj)=>({
     type: actionTypes.CHANGE_JOB,

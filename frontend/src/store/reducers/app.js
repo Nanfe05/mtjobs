@@ -5,11 +5,17 @@ const defState = {
     job:'',
     nameData:{},
     jobData:{},
-    loading:true
+    loading:true,
+    serverError:''
 };
 
 const App = (state = defState, action) => {
   switch (action.type) {
+    case actionTypes.SWITCH_LOADING:
+        return{
+            ...state,
+            loading: !state.loading
+        }
     case actionTypes.JOB_DATA:
         return{
             ...state,

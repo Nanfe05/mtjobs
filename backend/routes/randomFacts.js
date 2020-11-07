@@ -176,7 +176,7 @@ router.post('/name',async(req,res)=>{
     
         res.json(info);
     }catch(err){
-        res.sendStatus(404).json({
+        res.sendStatus(500).json({
             error:{
                 msg:'Error en el servidor'
             }
@@ -212,7 +212,7 @@ router.post('/job',async (req,res)=>{
     
         res.json(info);
     }catch(err){
-        res.sendStatus(404).json({
+        res.sendStatus(500).json({
             error:{
                 msg:'Error en el servidor'
             }

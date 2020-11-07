@@ -4,29 +4,59 @@ import TextField from '@material-ui/core/TextField';
 import {Button} from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+//Charts
+import { Doughnut } from 'react-chartjs-2';
+
 import {connect} from 'react-redux';
 
-import {ChangeName, ChangeJob ,ChangeJobData,ChangeNameData} from '../../../../store/actions/appActions';
+import {ChangeName, ChangeJob ,ChangeJobData,ChangeNameData,SwitchLoading} from '../../../../store/actions/appActions';
 
 const axios = require('axios');
+
+async function RequestData(ChangeNameData,ChangeJobData,SwitchLoading){
+    let curiousName = await axios.post('randomfacts/name');
+    ChangeNameData(curiousName.data);
+    let curiousJob = await axios.post('randomfacts/job');
+    ChangeJobData(curiousJob.data);
+    SwitchLoading();
+}
+
+function PrepareInterestData(nameData){
+    let interest = {};
+        for(let i=0;i< Object.keys(nameData).length-2 ; i++){
+            console.log('numero muestreo:', Object.keys(nameData).length);
+            for (let ii=0; ii < nameData[i].interest.length; ii++){
+                if(interest[nameData[i].interest[ii].name]){
+                    console.log('ljdfls');
+                    interest[nameData[i].interest[ii].name] += 1;
+                }else{
+                    console.log('ljdfls');
+                    interest[nameData[i].interest[ii].name] = 1;
+                }
+            }
+        }
+    console.log(nameData);
+//    return interest;
+}
 
 const Card = (props) =>{
 
     const [cardflipped,setCardFlipped] = useState(false);
 
-    useEffect(async()=>{
-        if(props.loading){
-                if(props.nameData){
-                    let curiousName = await axios.post('randomfacts/name',{});
-                    props.ChangeNameData(curiousName);
-                }
-                if(!props.jobData){
-                    let curiousJob = await axios.post('randomfacts/name',{});
-                    props.ChangeJobData(curiousJob);
-                }
+    useEffect(()=>{
+        if(props.state.loading){
+            RequestData(props.ChangeNameData,props.ChangeJobData,props.SwitchLoading);
         }
-    },[props.loading]);
-
+    // eslint-disable-next-line
+    },[]);
+    useEffect(()=>{
+        if(!props.state.loading){
+            PrepareInterestData(props.state.nameData, props.state.loading);
+        }
+    // eslint-disable-next-line
+    },[props.state.nameData, props.state.loading]);
+    // Preparar intereses
+    
 
     return(
             <div className='cardMain'>
@@ -41,7 +71,27 @@ const Card = (props) =>{
                             :
                             <>                           
                             <div className="flip-card-front">
-                                fadsfs
+                                <p>Nombre: {props.state.nameData.name.toUpperCase()}</p>
+                                <p>Tamaño del muestreo: {props.state.nameData.size}</p>
+                                <div className='graph_holder'>    
+                                    <Doughnut 
+                                    
+                                    data={{
+                                        labels: [],
+                                        datasets: [{
+                                            label: '# of Votes',
+                                            data: [12, 19, 3, 5, 2, 3],
+                                            backgroundColor: [
+                                                'rgba(255, 99, 132, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(75, 192, 192, 0.2)',
+                                                'rgba(153, 102, 255, 0.2)',
+                                                'rgba(255, 159, 64, 0.2)'
+                                            ]
+                                        }]}}
+                                    />
+                                </div>
                                 <Button className='MtJBoton' onClick={()=>{
                                     setCardFlipped(!cardflipped);
                                 }}>Intentalo!</Button>
@@ -86,5 +136,6 @@ export default connect(mapStateToProps,{
     ChangeName,
     ChangeJob,
     ChangeJobData,
-    ChangeNameData
+    ChangeNameData,
+    SwitchLoading
 })(Card);
