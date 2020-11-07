@@ -53,3 +53,4 @@ Submit a job's keyword that you would like to know an average of language and st
 - Nginx
 
 The frontend is served by an Nginx server and the server to consult Torre's data and handle frontend request runs with NodeJS.
+Everything is served from a Virtual Machine.
