@@ -25,7 +25,6 @@ class AboutUs extends Component{
                 <p className='title'>Devops:</p>
                 <p>- Google Cloud</p>
                 <p>- Nginx</p>
-                <p>Version 0.1</p>
             </div>
         );
     }
