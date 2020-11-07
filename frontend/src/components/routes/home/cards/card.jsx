@@ -5,7 +5,7 @@ import {Button} from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 //Charts
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut,Bar } from 'react-chartjs-2';
 
 import {connect} from 'react-redux';
 
@@ -21,27 +21,94 @@ async function RequestData(ChangeNameData,ChangeJobData,SwitchLoading){
     SwitchLoading();
 }
 
-function PrepareInterestData(nameData){
+function PrepareInterestData(nameData,ChangeUInterest){
     let interest = {};
         for(let i=0;i< Object.keys(nameData).length-2 ; i++){
-            console.log('numero muestreo:', Object.keys(nameData).length);
+            
             for (let ii=0; ii < nameData[i].interest.length; ii++){
                 if(interest[nameData[i].interest[ii].name]){
-                    console.log('ljdfls');
+                    
                     interest[nameData[i].interest[ii].name] += 1;
                 }else{
-                    console.log('ljdfls');
+                    
                     interest[nameData[i].interest[ii].name] = 1;
                 }
             }
         }
-    console.log(nameData);
-//    return interest;
+    ChangeUInterest(interest);
 }
+
+function PrepareSkillsData(nameData,ChangeUSkills){
+    let skills = {};
+        for(let i=0;i< Object.keys(nameData).length-2 ; i++){
+            
+            for (let ii=0; ii < nameData[i].skills.length; ii++){
+                if(skills[nameData[i].skills[ii].name]){
+                    
+                    skills[nameData[i].skills[ii].name] += 1;
+                }else{
+                    
+                    skills[nameData[i].skills[ii].name] = 1;
+                }
+            }
+        }
+    let frase = '';
+    Object.keys(skills).map((e)=>{
+        frase += ` * ${e}`;
+        return '';
+    });
+    ChangeUSkills(frase);
+}
+
+function PrepareLngData(nameData,ChangeULng){
+    let lng = {};
+        for(let i=0;i< Object.keys(nameData).length-2 ; i++){
+            
+            for (let ii=0; ii < nameData[i].languages.length; ii++){
+                if(lng[nameData[i].languages[ii].name]){
+                    
+                    lng[nameData[i].languages[ii].name] += 1;
+                }else{
+                    
+                    lng[nameData[i].languages[ii].name] = 1;
+                }
+            }
+        }
+    let frase = '';
+    Object.keys(lng).map((e)=>{
+        frase += ` * ${e}`;
+        return '';
+    });
+    ChangeULng(frase);
+}
+function PrepareUPTData(nameData,ChangeUPT){
+    let upt = {};
+        for(let i=0;i< Object.keys(nameData).length-2 ; i++){
+            
+            for (let ii=0; ii < nameData[i].personalTraits.length; ii++){
+                console.log(nameData[i].personalTraits[ii].groupId);
+                if(upt[nameData[i].personalTraits[ii].groupId]){
+                    
+                    
+                    upt[nameData[i].personalTraits[ii].groupId] = (nameData[i].personalTraits[ii].analysis+upt[nameData[i].personalTraits[ii].groupId]) /2;
+                }else{
+                    
+                    upt[nameData[i].personalTraits[ii].groupId]= nameData[i].personalTraits[ii].analysis;
+                }
+            }
+        }
+    console.log(upt);
+    ChangeUPT(upt);
+}
+
 
 const Card = (props) =>{
 
     const [cardflipped,setCardFlipped] = useState(false);
+    const [uInter,setUInter] = useState(null);
+    const [uSkills,setUSkills] = useState(null);
+    const [uLng,setLng] = useState(null);
+    const [uPT, setUPT] = useState(null);
 
     useEffect(()=>{
         if(props.state.loading){
@@ -51,12 +118,15 @@ const Card = (props) =>{
     },[]);
     useEffect(()=>{
         if(!props.state.loading){
-            PrepareInterestData(props.state.nameData, props.state.loading);
+            PrepareInterestData(props.state.nameData, setUInter);
+            PrepareSkillsData(props.state.nameData, setUSkills);
+            PrepareLngData(props.state.nameData, setLng);
+            PrepareUPTData(props.state.nameData, setUPT);
         }
     // eslint-disable-next-line
     },[props.state.nameData, props.state.loading]);
     // Preparar intereses
-    
+
 
     return(
             <div className='cardMain'>
@@ -73,25 +143,60 @@ const Card = (props) =>{
                             <div className="flip-card-front">
                                 <p>Nombre: {props.state.nameData.name.toUpperCase()}</p>
                                 <p>Tamaño del muestreo: {props.state.nameData.size}</p>
-                                <div className='graph_holder'>    
-                                    <Doughnut 
-                                    
-                                    data={{
-                                        labels: [],
-                                        datasets: [{
-                                            label: '# of Votes',
-                                            data: [12, 19, 3, 5, 2, 3],
-                                            backgroundColor: [
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(75, 192, 192, 0.2)',
-                                                'rgba(153, 102, 255, 0.2)',
-                                                'rgba(255, 159, 64, 0.2)'
-                                            ]
-                                        }]}}
-                                    />
-                                </div>
+                                {uInter && 
+                                    <div className='graph_holder'>    
+                                        <Doughnut 
+                                        
+                                        data={{
+                                            labels: Object.keys(uInter),
+                                            datasets: [{
+                                                
+                                                data: Object.values(uInter),
+                                                backgroundColor: [
+                                                    'rgba(255, 99, 132, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(75, 192, 192, 0.2)',
+                                                    'rgba(153, 102, 255, 0.2)',
+                                                    'rgba(255, 159, 64, 0.2)'
+                                                ]
+                                            }]}}
+                                        />
+                                    </div>
+                                }
+                                {uPT && 
+                                    <div className='graph_holder'>    
+                                        <Bar 
+                                        options={{ maintainAspectRatio: false }}
+                                        data={{
+                                            labels: Object.keys(uPT),
+                                            datasets: [{
+                                                label: 'Personality Traits',
+                                                data: Object.values(uPT),
+                                                backgroundColor: [
+                                                    'rgba(255, 99, 132, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(75, 192, 192, 0.2)',
+                                                    'rgba(153, 102, 255, 0.2)',
+                                                    'rgba(255, 159, 64, 0.2)'
+                                                ]
+                                            }]}}
+                                        />
+                                    </div>
+                                }
+                                {uSkills && 
+                                    <div className='graph_holder'>    
+                                        <p>Las personas con este nombre se enfocan en:</p>
+                                        {uSkills}
+                                    </div>
+                                }
+                                {uLng && 
+                                    <div className='graph_holder'>    
+                                        <p>y saben los siguientes idiomas:</p>
+                                        {uLng}
+                                    </div>
+                                }
                                 <Button className='MtJBoton' onClick={()=>{
                                     setCardFlipped(!cardflipped);
                                 }}>Intentalo!</Button>
@@ -137,5 +242,5 @@ export default connect(mapStateToProps,{
     ChangeJob,
     ChangeJobData,
     ChangeNameData,
-    SwitchLoading
+    SwitchLoading,
 })(Card);
